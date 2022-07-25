@@ -191,11 +191,12 @@ class VersionGroupDetailDto {
 }
 
 class Sprites {
-  Sprites({this.backDefault, this.backShiny, this.frontDefault});
+  Sprites({this.backDefault, this.backShiny, this.frontDefault, this.other});
 
   String? backDefault;
   String? backShiny;
   String? frontDefault;
+  Other? other;
   factory Sprites.fromJson(String str) => Sprites.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
@@ -204,12 +205,66 @@ class Sprites {
         backDefault: json["back_default"],
         backShiny: json["back_shiny"],
         frontDefault: json["front_default"],
+        other: Other.fromMap(json['other'] ?? {}),
       );
 
   Map<String, dynamic> toMap() => {
         "back_default": backDefault,
         "back_shiny": backShiny,
         "front_default": frontDefault,
+        "other": other?.toMap(),
+      };
+}
+
+class Other {
+  Other({
+    this.home,
+  });
+
+  Home? home;
+
+  factory Other.fromJson(String str) => Other.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Other.fromMap(Map<String, dynamic> json) => Other(
+        home: Home.fromMap(json["home"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "home": home?.toMap(),
+      };
+}
+
+class Home {
+  Home({
+    this.frontDefault,
+    this.frontFemale,
+    this.frontShiny,
+    this.frontShinyFemale,
+  });
+
+  String? frontDefault;
+  String? frontFemale;
+  String? frontShiny;
+  String? frontShinyFemale;
+
+  factory Home.fromJson(String str) => Home.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory Home.fromMap(Map<String, dynamic> json) => Home(
+        frontDefault: json["front_default"],
+        frontFemale: json["front_female"],
+        frontShiny: json["front_shiny"],
+        frontShinyFemale: json["front_shiny_female"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "front_default": frontDefault,
+        "front_female": frontFemale,
+        "front_shiny": frontShiny,
+        "front_shiny_female": frontShinyFemale,
       };
 }
 

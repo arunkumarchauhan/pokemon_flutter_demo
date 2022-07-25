@@ -256,12 +256,12 @@ class VersionGroupDetailDto {
 }
 
 class SpritesDto {
-  SpritesDto({this.backDefault, this.backShiny, this.frontDefault});
+  SpritesDto({this.backDefault, this.backShiny, this.frontDefault, this.other});
 
   String? backDefault;
   String? backShiny;
   String? frontDefault;
-
+  OtherDto? other;
   factory SpritesDto.fromJson(String str) =>
       SpritesDto.fromMap(json.decode(str));
 
@@ -271,12 +271,66 @@ class SpritesDto {
         backDefault: json["back_default"],
         backShiny: json["back_shiny"],
         frontDefault: json["front_default"],
+        other: json["other"] == null ? null : OtherDto.fromMap(json["other"]),
       );
 
   Map<String, dynamic> toMap() => {
         "back_default": backDefault,
         "back_shiny": backShiny,
         "front_default": frontDefault,
+        "other": other?.toMap(),
+      };
+}
+
+class OtherDto {
+  OtherDto({
+    this.home,
+  });
+
+  HomeDto? home;
+
+  factory OtherDto.fromJson(String str) => OtherDto.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory OtherDto.fromMap(Map<String, dynamic> json) => OtherDto(
+        home: HomeDto.fromMap(json["home"]),
+      );
+
+  Map<String, dynamic> toMap() => {
+        "home": home?.toMap(),
+      };
+}
+
+class HomeDto {
+  HomeDto({
+    this.frontDefault,
+    this.frontFemale,
+    this.frontShiny,
+    this.frontShinyFemale,
+  });
+
+  String? frontDefault;
+  String? frontFemale;
+  String? frontShiny;
+  String? frontShinyFemale;
+
+  factory HomeDto.fromJson(String str) => HomeDto.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory HomeDto.fromMap(Map<String, dynamic> json) => HomeDto(
+        frontDefault: json["front_default"],
+        frontFemale: json["front_female"],
+        frontShiny: json["front_shiny"],
+        frontShinyFemale: json["front_shiny_female"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "front_default": frontDefault,
+        "front_female": frontFemale,
+        "front_shiny": frontShiny,
+        "front_shiny_female": frontShinyFemale,
       };
 }
 

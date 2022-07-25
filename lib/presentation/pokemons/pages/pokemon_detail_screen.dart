@@ -165,9 +165,9 @@ class _PokemonDetailScreenState extends ConsumerState<PokemonDetailScreen>
                                   SizedBox(
                                     height: 300 * (1 - panelHeightExtent),
                                     child: Transform.scale(
-                                      scale: 2.5,
+                                      scale: 1,
                                       child: Image.network(
-                                        "${pokemon.sprites?.frontDefault}",
+                                        "${pokemon.sprites?.other?.home?.frontDefault}",
                                         fit: BoxFit.fitHeight,
                                         errorBuilder: (_, error, trace) {
                                           return const Text(
@@ -267,11 +267,11 @@ class _PokemonDetailScreenState extends ConsumerState<PokemonDetailScreen>
           alignment: Alignment.topCenter,
           children: [
             Positioned(
-                top: -50,
+                top: -300,
                 child: Transform.scale(
-                  scale: 6 * panelHeightExtent,
+                  scale: 1 * (panelHeightExtent * 0.8),
                   child: Image.network(
-                    "${pokemonDetail.sprites?.frontDefault}",
+                    "${pokemonDetail.sprites?.other?.home?.frontDefault}",
                     errorBuilder: (_, error, trace) {
                       return const Text(
                         "Image Not Found",
