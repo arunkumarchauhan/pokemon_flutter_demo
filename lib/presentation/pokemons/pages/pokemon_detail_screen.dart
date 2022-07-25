@@ -68,17 +68,18 @@ class _PokemonDetailScreenState extends ConsumerState<PokemonDetailScreen>
           return Scaffold(
             body: SlidingUpPanel(
               controller: _panelController,
-              color: Colors.black,
+              backdropOpacity: 1,
+              color: Colors.transparent.withOpacity(0),
               renderPanelSheet: true,
               minHeight: 100,
-              maxHeight: 450.h,
+              maxHeight: 690.h,
               onPanelSlide: (value) {
                 setState(() {
                   panelHeightExtent = value;
                 });
               },
               borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+                  topLeft: Radius.circular(0), topRight: Radius.circular(0)),
               collapsed: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -258,51 +259,61 @@ class _PokemonDetailScreenState extends ConsumerState<PokemonDetailScreen>
     );
   }
 
-  Column _buildStatsInfoColumn(
+  Widget _buildStatsInfoColumn(
       BuildContext context, PokemonDetail pokemonDetail) {
-    return Column(
-      children: [
-        Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
+    return Container(
+      padding: const EdgeInsets.only(top: 200),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+        ),
+        child: Column(
           children: [
-            Positioned(
-                top: -300,
-                child: Transform.scale(
-                  scale: 1 * (panelHeightExtent * 0.8),
-                  child: Image.network(
-                    "${pokemonDetail.sprites?.other?.home?.frontDefault}",
-                    errorBuilder: (_, error, trace) {
-                      return const Text(
-                        "Image Not Found",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: 20,
-                        ),
-                      );
-                    },
-                  ),
-                )),
-            const SizedBox(
-              height: 100,
+            Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                    top: -300,
+                    child: Transform.scale(
+                      scale: 1 * (panelHeightExtent * 0.8),
+                      child: Image.network(
+                        "${pokemonDetail.sprites?.other?.home?.frontDefault}",
+                        errorBuilder: (_, error, trace) {
+                          return const Text(
+                            "Image Not Found",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 20,
+                            ),
+                          );
+                        },
+                      ),
+                    )),
+                const SizedBox(
+                  height: 100,
+                ),
+              ],
             ),
+            _buildTabBar(),
+            Expanded(
+              child: TabBarView(controller: _tabController, children: [
+                TabViewBodyContainer(
+                    child: Padding(
+                  padding: const EdgeInsets.only(top: 30),
+                  child: _buildAboutBody(pokemonDetail: pokemonDetail),
+                )),
+                _buildStatTabViewBody(pokemonDetail: pokemonDetail),
+                _buildMovesTabBody(context, pokemonDetail: pokemonDetail),
+                _buildAbilitiesTabBody(context, pokemonDetail: pokemonDetail),
+                _buildEncountersTabBody(context),
+              ]),
+            )
           ],
         ),
-        _buildTabBar(),
-        Expanded(
-          child: TabBarView(controller: _tabController, children: [
-            TabViewBodyContainer(
-                child: Padding(
-              padding: const EdgeInsets.only(top: 30),
-              child: _buildAboutBody(pokemonDetail: pokemonDetail),
-            )),
-            _buildStatTabViewBody(pokemonDetail: pokemonDetail),
-            _buildMovesTabBody(context, pokemonDetail: pokemonDetail),
-            _buildAbilitiesTabBody(context, pokemonDetail: pokemonDetail),
-            _buildEncountersTabBody(context),
-          ]),
-        )
-      ],
+      ),
     );
   }
 
