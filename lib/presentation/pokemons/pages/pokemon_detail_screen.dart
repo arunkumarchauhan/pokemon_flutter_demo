@@ -69,8 +69,9 @@ class _PokemonDetailScreenState extends ConsumerState<PokemonDetailScreen>
             body: SlidingUpPanel(
               controller: _panelController,
               backdropOpacity: 1,
-              color: Colors.transparent.withOpacity(0),
-              renderPanelSheet: true,
+              color: Colors.transparent,
+              renderPanelSheet: false,
+              parallaxEnabled: false,
               minHeight: 100,
               maxHeight: 690.h,
               onPanelSlide: (value) {
