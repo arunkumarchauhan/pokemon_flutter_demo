@@ -19,6 +19,8 @@ jobs:
         with:
           java-version: "12.x"
       - uses: subsito/flutter-action@v1
+        with:
+          flutter-version: 3.0.5
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi
