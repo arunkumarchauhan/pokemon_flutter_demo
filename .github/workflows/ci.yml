@@ -1,11 +1,9 @@
 name: Build  and Release
-on : 
+on:
   pull_request:
     branches:
       - main
       - master
-
-on : 
   push:
     branches:
       - main
@@ -16,18 +14,17 @@ jobs:
     name: Build and Release job
     runs-on: macos-latest
     steps:
-      - uses : actions/checkout@v1
-      - uses : actions/setup-java@v1
-        with :
-          java-version : '12.x'
-      - uses : subsito/flutter-action@v1
-      - run : flutter pub get
-      - run : flutter test
-      - run : flutter build apk --debug --split-per-abi
-      - name : Push TO Release
-      - uses : ncipollo/release-action@v1
-        with : 
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subsito/flutter-action@v1
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --debug --split-per-abi
+      - name: Push TO Release
+      - uses: ncipollo/release-action@v1
+        with:
           artifacts: "build/app/outputs/apk/debug/*"
-          tag : v1.0.${{github.run_number}}
-          token : ${{secrets.TOKEN}}               
-                      
+          tag: v1.0.${{github.run_number}}
+          token: ${{secrets.TOKEN}}
