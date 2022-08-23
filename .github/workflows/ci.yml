@@ -1,13 +1,13 @@
 name: Build  and Release
 on : pull_request:
-        branches:
-          - main
-          - master
+      branches:
+        - main
+        - master
 
 on : push:
-        branches:
-          - main
-          - master
+      branches:
+        - main
+        - master
 
 jobs:
   build:
